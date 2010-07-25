@@ -11,6 +11,8 @@
   testing purposes."
   (:use clojure-dbm))
 
+(derive ::memory ::db)
+
 (def memory-stores (ref {}))
 
 (defn- get-store
@@ -23,22 +25,22 @@
         (alter memory-stores assoc name store)
         store))))
 
-(defmethod db-open ::hash-map
+(defmethod db-open ::memory
   [repository]
   (assoc repository :db (get-store hash-map (:name repository))))
 
-(defmethod db-close ::hash-map [repository])
+(defmethod db-close ::memory [repository])
 
-(defmethod db-fetch ::hash-map
+(defmethod db-fetch ::memory
   [repository key]
   (@(:db repository) key))
 
-(defmethod db-store ::hash-map
+(defmethod db-store ::memory
   [repository key value]
   (dosync
     (alter (:db repository) assoc key value)))
 
-(defmethod db-delete ::hash-map
+(defmethod db-delete ::memory
   [repository key]
   (dosync
     (alter (:db repository) dissoc key)))

@@ -9,7 +9,7 @@
 (ns clojure-dbm.tokyo-cabinet
   "Implementation of the clojure-dbm interface for Tokyo Cabinet."
   (:use clojure-dbm)
-  (:use clojure.contrib.fcase)
+;  (:use clojure.contrib.fcase)
   (:use clojure.contrib.def)
   (:use clojure.contrib.except)
   (:import (tokyocabinet HDB FDB BDB)))
